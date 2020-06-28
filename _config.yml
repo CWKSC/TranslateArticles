@@ -1,0 +1,153 @@
+# Site Settings
+name: CWKSC's blog | 博客
+title: CWKSC's blog | 博客
+description: CWKSC's blog, by using Jekflix, Jekflix is a template for Jekyll inspired by Netflix and made by Thiago Rossener.
+tags:
+  - blog
+  - template
+  - jekyll
+  - theme
+  - netlify
+email: sam979451653@gmail.com
+disqus_username: 
+show_hero: false
+menu:
+  - title: Home 主頁
+    url: /
+  - title: About Me 關於我
+    url: /about_me
+  - title: About Blog 關於這個博客
+    url: /about_this_blog
+#  - title: Contact
+#    url: /contact
+  - title: Link Exchange 友鏈
+    url: /link_exchange
+  - title: Tags 標籤
+    url: /tags
+  - title: Feed 餵食 (๑´ㅂ`๑)
+    url: /feed.xml
+
+
+# Social Media Settings
+# Remove the item if you don't need it
+github_username: CWKSC
+#facebook_username: 
+twitter_username: CwkscP
+instagram_username: CWKSC
+#linkedin_username: 
+#medium_username: 
+
+
+# Posts Settings
+show_time_bar: false
+show_modal_on_exit: false
+show_modal_on_finish_post: true
+two_columns_layout: true
+
+
+# Advanced Settings
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site
+google_analytics: "UA-XXXXXXXX-X"
+language: "zh"
+categories_folder: category
+sent_message_url: "/contact/message-sent/"
+
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /:title/
+collections:
+  authors:
+    output: true
+paginate_path: "/page/:num/"
+show_get_theme_btn: false
+use_logo: false
+
+# Content paginator
+paginate_content:
+  enabled: true
+  debug: false
+  collections:
+    - posts
+  auto: false
+  separator: "--page-break--"
+  permalink: "/:num/"
+  seo_canonical: true
+  properties:
+    part:
+      is_generated: true
+    last:
+      is_generated: true
+    single:
+      is_generated: true
+
+# SASS
+sass:
+  style: compressed
+
+# Plugins
+plugins:
+  - jekyll-paginate
+  - jekyll-paginate-content
+
+# Exclude my node related stuff
+exclude: [
+  'package.json',
+  'package-lock.json',
+  'src',
+  'node_modules',
+  'initpost.sh',
+  'Gemfile',
+  'Gemfile.lock',
+  'gulpfile.js',
+  'README.md'
+]
+
+# Theme
+version: v3.1.0
+
+
+translations:
+  text:
+    new_post: "New Post 新文章"
+    see_also: "See also 也可以看看"
+    search: "Search 搜尋"
+    author: "Author 作者"
+    share: "Share 分享"
+    comments: "Comments 評論"
+  button:
+    read_now: "Read Now"
+    share_on_twitter: "Share on Twitter 在推特上分享"
+    share_on_facebook: "Share on Facebook 在臉書上分享"
+  pagination:
+    page: "Page 頁面"
+    of: "of"
+    next_page: "Next Page"
+    next_post: "Previous Page"
+  recommendation:
+    text: "Why don't you read something next? 看看其他文章 OW<？"
+    back_btn: "Go back to top 回到頂部"
+  error_404:
+    title: "Page not found :( 找不到頁面 :("
+    message: "I'm sorry. We couldn't find the page you are looking for. 對不起，我們找不到您要查找的頁面。"
+    image_alt: "404 - Page not found 找不到頁面"
+  contact:
+    title: "Talk to me"
+    subject: "New contact!"
+    submit_btn: "Send"
+    placeholders:
+      name: "Your name"
+      email: "Your e-mail"
+      message: "Your message"
+    errors:
+      locale: "en"
+      empty_name: "Name is required"
+      empty_email: "Email is required"
+      invalid_email: "Email is invalid"
+      empty_message: "Message is required"
+    after_send:
+      title: "Message sent!"
+      message: "Thank you for sending me a message. I'm going to answer ASAP."
+
