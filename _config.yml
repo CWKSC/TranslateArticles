@@ -14,14 +14,16 @@ show_hero: false
 menu:
   - title: Home 主頁
     url: /
-  - title: About Me 關於我
-    url: /about_me
+  - title: Main Blog 主博客
+    url: ../
+#  - title: About Me 關於我
+#    url: /about_me
 #  - title: About Blog 關於這個博客
 #    url: /about_this_blog
 #  - title: Contact
 #    url: /contact
-  - title: Link Exchange 友鏈
-    url: /link_exchange
+#  - title: Link Exchange 友鏈
+#    url: /link_exchange
   - title: Tags 標籤
     url: /tags
   - title: Feed 餵食 (๑´ㅂ`๑)
