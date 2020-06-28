@@ -1,6 +1,6 @@
 # Site Settings
-name: CWKSC's blog | 博客
-title: CWKSC's blog | 博客
+name: CWKSC's 翻譯文章
+title: CWKSC's 翻譯文章
 description: CWKSC's blog, by using Jekflix, Jekflix is a template for Jekyll inspired by Netflix and made by Thiago Rossener.
 tags:
   - blog
@@ -16,8 +16,8 @@ menu:
     url: /
   - title: About Me 關於我
     url: /about_me
-  - title: About Blog 關於這個博客
-    url: /about_this_blog
+#  - title: About Blog 關於這個博客
+#    url: /about_this_blog
 #  - title: Contact
 #    url: /contact
   - title: Link Exchange 友鏈
@@ -46,7 +46,7 @@ two_columns_layout: true
 
 
 # Advanced Settings
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "/TranslateArticles" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site
 google_analytics: "UA-XXXXXXXX-X"
 language: "zh"
