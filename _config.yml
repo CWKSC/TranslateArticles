@@ -16,12 +16,8 @@ menu:
     url: /
   - title: Main Blog 主博客
     url: /../
-#  - title: About Me 關於我
-#    url: /about_me
-#  - title: About Blog 關於這個博客
-#    url: /about_this_blog
-#  - title: Contact
-#    url: /contact
+  - title: About Blog 關於這個博客
+    url: /about_this_blog
 #  - title: Link Exchange 友鏈
 #    url: /link_exchange
   - title: Tags 標籤

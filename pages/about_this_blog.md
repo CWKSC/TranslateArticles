@@ -9,14 +9,18 @@ permalink: /about_this_blog/
 
 # About This Blog 關於這個博客
 
-這個博客主要是寫技術文章的，有時候是日常生活、吐槽
+This blog is a translation of some website documentation articles
 
-文章字體會統一用繁體，來自内地的朋友抱歉啦 
+這個博客是一些網站文檔文章的翻譯
 
-封面的圖片主要從這裏獲取： [https://unsplash.com/](https://unsplash.com/)
+Sometimes it’s just a google translation
 
-Blog 用了GitHub Pages + Jekyll，Theme 是 [Jekflix](https://github.com/thiagorossener/jekflix-template) 
+有時候只是單純經過一次 google 翻譯 
 
-這個主題的排版可以一次過展示更多的文章，挺好的
+If you think the translated article infringes your copyright, please post an issue [here](https://github.com/CWKSC/BlogComment/issues)
 
-歡迎交換[友鏈](https://cwksc.github.io/link_exchange/)
+若果你認為翻譯的文章侵犯到您的版權，請到 [這裏](https://github.com/CWKSC/BlogComment/issues) 提出 issue
+
+Or send an email to sam979451653@gmail.com, I will delete related articles immediately
+
+或發送電郵到 sam979451653@gmail.com，我會立刻刪除相關文章
