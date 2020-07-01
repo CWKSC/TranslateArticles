@@ -81,13 +81,14 @@
         {% include subscription.html %}
         <!-- {% include share.html %} -->
         {% include author.html %}
+		
+		<section class="issue_comments">
+			<p>對於我博客的任何評論或討論，可以在<a href="https://github.com/CWKSC/BlogComment/issues">這裏</a>開一個 issue</p>
+		</section>
+		
         <!-- {% include comments.html %} -->
         {% include footer.html %}
 		
-		<section class="issue_comments">
-			對於我博客的任何評論或討論，可以在<a href="https://github.com/CWKSC/BlogComment/issues">這裏</a>開一個 issue
-		</section>
-
         {% assign author = site.authors | where: "name", post.author | first %}
 
         {% assign author_urls = '' %}
