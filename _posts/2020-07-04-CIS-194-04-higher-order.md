@@ -17,9 +17,7 @@ math: true
 
 Source: [04-higher-order](https://www.seas.upenn.edu/~cis194/spring13/lectures/04-higher-order.html)
 
-## ▌Higher-order programming and type inference
-
-## 高階編程和類型推斷
+## ▌Higher-order programming and type inference 高階編程和類型推斷
 
 CIS 194 第 4 週
 2013 年 2 月 4 日
@@ -36,7 +34,7 @@ CIS 194 第 4 週
 greaterThan100 :: [Integer] -> [Integer]
 ```
 
-僅保留輸入列表中大於100的那些Integer。例如
+僅保留輸入列表中大於 100 的那些 Integer。例如
 
 ```haskell
 greaterThan100 [1,9,349,6,907,98,105] = [349,907,105].
@@ -75,7 +73,7 @@ greaterThan100_3 :: [Integer] -> [Integer]
 greaterThan100_3 xs = filter (>100) xs
 ```
 
-`(>100)`是*運算符部分*：如果 `?` 是運算符，則 `(?y)` 等效於函數 `\x -> x ? y`，並且 `(y?)` 等效於 `\x -> y ? x` 。換句話說，使用運算符部分可以使我們將運算符部分應用於其兩個參數之一。 我們得到的是單個參數的函數。 這裡有些例子：
+`(>100)` 是*運算符部分*：如果 `?` 是運算符，則 `(?y)` 等效於函數 `\x -> x ? y`，並且 `(y?)` 等效於 `\x -> y ? x` 。換句話說，使用運算符部分可以使我們將運算符部分應用於其兩個參數之一。 我們得到的是單個參數的函數。 這裡有些例子：
 
 ```haskell
 Prelude> (>100) 102
@@ -88,7 +86,7 @@ Prelude> map (*6) [1..5]
 
 ## ▌Function composition 函數組成
 
-在繼續閱讀之前，您可以寫下類型為
+在繼續閱讀之前，先寫下一個類型如下的函數
 
 ```haskell
 (b -> c) -> (a -> b) -> (a -> c)
@@ -146,9 +144,7 @@ Prelude> :t (.)
 (.) :: (b -> c) -> (a -> b) -> a -> c
 ```
 
-等一下。這裡發生了什麼？括號內 `(a -> c)` 發生了什麼？
-
-> Wait a minute. What’s going on here? What happened to the parentheses around `(a -> c)`?
+等一下。這裡發生了什麼？ `(a -> c)` 發生了什麼？
 
 ## ▌Currying and partial application 柯里化和部分應用
 
@@ -168,9 +164,7 @@ f' x y = 2*x + y
 
 特別要注意的是，函數箭頭在 *右側* ，即 `W -> X -> Y -> Z` 等效於 `W -> (X -> (Y -> Z))` 。我們始終可以在類型中最右邊的頂級箭頭周圍添加或刪除括號。
 
-而函數應用則*保持左*關聯。也就是說，`f 3 2`確實是的簡寫`(f 3) 2`。考慮到我們之前所說的關於`f`實際接受一個參數並返回一個函數`f`的說法`3`，這是有道理的：我們適用於一個參數，該參數返回一個類型為type的函數`Int -> Int`，即一個將an `Int`加6 的函數。然後，我們`2`通過編寫將該函數應用於自變量`(f 3) 2`，從而得到一個`Int`。由於函數應用程序關聯到左側，因此我們可以縮寫`(f 3) 2`為`f 3 2`，從而`f`為“多參數”函數提供了一個很好的表示法。
-
-反過來，函數應用程序是左關聯的。 也就是說，`f 3 2` 實際上是 `(f 3) 2` 的簡寫。考慮到我們之前所說的關於 `f` 實際上接受一個參數並返回一個函數的說法，這是有道理的：我們將 `f` 應用於參數 `3`，該參數返回類型為 `Int-> Int` 的函數，即一個將 `Int` 加上 `6` 的函數。 然後，通過編寫 `(f 3) 2` 將該函數應用於自變量 `2`，這將為我們提供一個整數。 由於函數應用關聯到左側，因此，我們可以將 `(f 3) 2` 縮寫為 `f 3 2`，從而為 `f` 提供了一個很好的表示法，即 “多參數” 函數。
+反過來，函數應用是左關聯的。 也就是說，`f 3 2` 實際上是 `(f 3) 2` 的簡寫。考慮到我們之前所說的關於 `f` 實際上接受一個參數並返回一個函數的說法，這是有道理的：我們將 `f` 應用於參數 `3`，該參數返回類型為 `Int-> Int` 的函數，即一個將 `Int` 加上 `6` 的函數。 然後，通過編寫 `(f 3) 2` 將該函數應用於自變量 `2`，這將為我們提供一個整數。 由於函數應用關聯到左側，因此，我們可以將 `(f 3) 2` 縮寫為 `f 3 2`，從而為 `f` 提供了一個很好的表示法，即 “多參數” 函數。
 
 多參數 lambda 抽象
 
@@ -203,7 +197,7 @@ comp :: (b -> c) -> (a -> b) -> a -> c
 comp f g x = f (g x)
 ```
 
-將多參數函數表示為單參數函數返回函數的想法被稱為 *currying(柯里化)* ，以英國數學家和邏輯學家 Haskell Curry 的名字命名。（他的名字聽起來很耳熟；是的，是同一個人。） Curry 居住於 1900 年至 1982 年，一生都在賓夕法尼亞州立大學（Penn State）工作 —— 但他還幫助在 UPenn 從事 ENIAC 工作。將多參數函數表示為單參數函數返回函數的想法實際上是由 *Moses Schönfinkel*  首次發現的，因此我們應該將其 *稱為schönfinkeling* 。Curry 本人將這個想法歸因於 Schönfinkel，但其他人已經開始稱其為 currying ，為時已晚
+將多參數函數表示為單參數函數返回函數的想法被稱為 *currying(柯里化)* ，以英國數學家和邏輯學家 Haskell Curry 的名字命名。（他的名字聽起來很耳熟；是的，是同一個人。） Curry 居住於 1900 年至 1982 年，一生都在賓夕法尼亞州立大學（Penn State）工作 —— 但他還幫助在 UPenn 從事 ENIAC 工作。將多參數函數表示為單參數函數返回函數的想法實際上是由 *Moses Schönfinkel*  首次發現的，因此我們應該將其 *稱為 schönfinkeling* 。Curry 本人將這個想法歸因於 Schönfinkel，但其他人已經開始稱其為 currying ，為時已晚
 
 如果要實際表示兩個參數的函數，則可以使用一個元組的單個參數。即函數
 
@@ -239,6 +233,8 @@ Prelude> uncurry (+) (2,3)
 >
 > The fact that functions in Haskell are curried makes *partial application* particularly easy. The idea of partial application is that we can take a function of multiple arguments and apply it to just *some* of its arguments, and get out a function of the remaining arguments. But as we’ve just seen, in Haskell there *are no* functions of multiple arguments! Every function can be “partially applied” to its first (and only) argument, resulting in a function of the remaining arguments.
 >
+> <br>
+>
 > Note that Haskell doesn’t make it easy to partially apply to an argument other than the first. The one exception is infix operators, which as we’ve seen, can be partially applied to either of their two arguments using an operator section. In practice this is not that big of a restriction. There is an art to deciding the order of arguments to a function to make partial applications of it as useful as possible: the arguments should be ordered from from “least to greatest variation”, that is, arguments which will often be the same should be listed first, and arguments which will often be different should come last.
 
 ### ▌Wholemeal 編程
@@ -253,7 +249,7 @@ foobar (x:xs)
   | otherwise = foobar xs
 ```
 
-這似乎很簡單，但是不是很好的Haskell樣式。問題是
+這似乎很簡單，但是不是很好的 Haskell 樣式。問題是
 
 - 一次做太多事情
 - 工作水平太低
@@ -286,7 +282,7 @@ join . ((flip . ((.) .)) .) . (. ap (++)) . (.)
 
 ## ▌Folds 折疊
 
-列表上還有一個要討論的遞歸模式：折疊。以下是列表中的一些函數，它們遵循類似的模式：所有這些函數都以某種方式將列表中的元素“組合”為最終答案。
+列表上還有一個要討論的遞歸模式：Fold 折疊。以下是列表中的一些函數，它們遵循類似的模式：所有這些函數都以某種方式將列表中的元素“組合”為最終答案。
 
 ```haskell
 sum' :: [Integer] -> Integer
