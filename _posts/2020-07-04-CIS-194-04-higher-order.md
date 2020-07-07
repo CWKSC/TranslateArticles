@@ -159,7 +159,7 @@ f :: Int -> Int -> Int
 f x y = 2*x + y
 ```
 
-我之前曾承諾過，這有一個美麗而深刻的原因，現在終於可以揭露它了：*Haskell中的所有函數都只接受一個參數*。說什麼？！但是 `f` 上面顯示的函數不接受兩個參數嗎？不，實際上，它不是：它接受一個參數（一個`Int`）並 ***輸出一個函數*** （類型 `Int -> Int` ）；該函數接受一個參數並返回最終答案。實際上，我們可以這樣等效地編寫`f`的類型：
+我之前曾承諾過，這有一個美麗而深刻的原因，現在終於可以揭露它了：*Haskell中的所有函數都只接受一個參數* 。說什麼？！但是 `f` 上面顯示的函數不接受兩個參數嗎？不，實際上，它不是：它接受一個參數（一個`Int`）並 ***輸出一個函數*** （類型 `Int -> Int` ）；該函數接受一個參數並返回最終答案。實際上，我們可以這樣等效地編寫`f`的類型：
 
 ```haskell
 f' :: Int -> (Int -> Int)
@@ -168,9 +168,9 @@ f' x y = 2*x + y
 
 特別要注意的是，函數箭頭在 *右側* ，即 `W -> X -> Y -> Z` 等效於 `W -> (X -> (Y -> Z))` 。我們始終可以在類型中最右邊的頂級箭頭周圍添加或刪除括號。
 
-而函數應用程序則*保持左*關聯。也就是說，`f 3 2`確實是的簡寫`(f 3) 2`。考慮到我們之前所說的關於`f`實際接受一個參數並返回一個函數`f`的說法`3`，這是有道理的：我們適用於一個參數，該參數返回一個類型為type的函數`Int -> Int`，即一個將an `Int`加6 的函數。然後，我們`2`通過編寫將該函數應用於自變量`(f 3) 2`，從而得到一個`Int`。由於函數應用程序關聯到左側，因此我們可以縮寫`(f 3) 2`為`f 3 2`，從而`f`為“多參數”函數提供了一個很好的表示法。
+而函數應用則*保持左*關聯。也就是說，`f 3 2`確實是的簡寫`(f 3) 2`。考慮到我們之前所說的關於`f`實際接受一個參數並返回一個函數`f`的說法`3`，這是有道理的：我們適用於一個參數，該參數返回一個類型為type的函數`Int -> Int`，即一個將an `Int`加6 的函數。然後，我們`2`通過編寫將該函數應用於自變量`(f 3) 2`，從而得到一個`Int`。由於函數應用程序關聯到左側，因此我們可以縮寫`(f 3) 2`為`f 3 2`，從而`f`為“多參數”函數提供了一個很好的表示法。
 
-反過來，函數應用程序是左關聯的。 也就是說，`f 3 2` 實際上是 `(f 3) 2` 的簡寫。考慮到我們之前所說的關於 `f` 實際上接受一個參數並返回一個函數的說法，這是有道理的：我們將f應用於參數3，該參數返回類型為 `Int-> Int` 的函數，即一個將 `Int` 加上 `6` 的函數。 然後，通過編寫 `(f 3) 2` 將該函數應用於自變量 `2`，這將為我們提供一個整數。 由於函數應用程序關聯到左側，因此，我們可以將 `(f 3) 2` 縮寫為 `f 3 2`，從而為 `f` 提供了一個很好的表示法，即 “多參數” 函數。
+反過來，函數應用程序是左關聯的。 也就是說，`f 3 2` 實際上是 `(f 3) 2` 的簡寫。考慮到我們之前所說的關於 `f` 實際上接受一個參數並返回一個函數的說法，這是有道理的：我們將 `f` 應用於參數 `3`，該參數返回類型為 `Int-> Int` 的函數，即一個將 `Int` 加上 `6` 的函數。 然後，通過編寫 `(f 3) 2` 將該函數應用於自變量 `2`，這將為我們提供一個整數。 由於函數應用關聯到左側，因此，我們可以將 `(f 3) 2` 縮寫為 `f 3 2`，從而為 `f` 提供了一個很好的表示法，即 “多參數” 函數。
 
 多參數 lambda 抽象
 
@@ -231,13 +231,19 @@ Prelude> uncurry (+) (2,3)
 
 ### ▌Partial application 部分應用
 
-函數在 Haskell 中經過柯里化使 *部分應用(Partial application)* 特別容易。部分應用的想法是，我們可以採用多個參數的函數，然後將其應用於*其中的某些*參數，然後得出其餘參數的函數。但是正如我們剛剛看到的那樣，在Haskell *中沒有*多重參數的功能！每個函數都可以“部分地”應用到其第一個（也是唯一一個）參數，從而產生其餘參數的功能。
+函數在 Haskell 中經過柯里化使 *部分應用(Partial application)* 特別容易。部分應用的想法是，我們可以採用多個參數的函數，然後將其應用於*其中的某些*參數，然後得出其餘參數的函數。但是正如我們剛剛看到的那樣，在Haskell *中沒有* 多重參數的函數！每個函數都可以 “部分地” 應用到其第一個（也是唯一一個）參數，從而產生其餘參數的功能。
 
-請注意，Haskell使其難以部分應用於第一個參數以外的其他參數。一個例外是中綴運算符，正如我們已經看到的那樣，可以使用運算符部分將其部分應用於兩個自變量。實際上，這並不是很大的限制。確定一種函數的參數順序以使它的部分應用盡可能有用是一種技巧：參數應從“最小變化到最大變化”進行排序，也就是說，通常應相同的參數應為首先列出，然後通常會有所不同的論點應該放在最後。
+請注意，除了第一個參數外，Haskell 很難將其部分應用到其他參數。 一個例外是中綴運算符，正如我們已經看到的那樣，可以使用運算符部分將其部分應用於兩個自變量。 實際上，這並不是很大的限制。 確定一種函數的參數順序以使它的部分應用盡可能有用是一種技巧：參數應從“最小變化到最大變化”進行排序，也就是說，通常應相同的參數應為 首先列出，然後通常會有所不同的論點應該放在最後。
 
-**▌全餐編程**
+> 難以翻譯，原文在這裏：
+>
+> The fact that functions in Haskell are curried makes *partial application* particularly easy. The idea of partial application is that we can take a function of multiple arguments and apply it to just *some* of its arguments, and get out a function of the remaining arguments. But as we’ve just seen, in Haskell there *are no* functions of multiple arguments! Every function can be “partially applied” to its first (and only) argument, resulting in a function of the remaining arguments.
+>
+> Note that Haskell doesn’t make it easy to partially apply to an argument other than the first. The one exception is infix operators, which as we’ve seen, can be partially applied to either of their two arguments using an operator section. In practice this is not that big of a restriction. There is an art to deciding the order of arguments to a function to make partial applications of it as useful as possible: the arguments should be ordered from from “least to greatest variation”, that is, arguments which will often be the same should be listed first, and arguments which will often be different should come last.
 
-讓我們將一個示例中剛剛學到的東西放在一起，它還展示了“全餐”編程風格的強大功能。考慮功能`foobar`，定義如下：
+### ▌Wholemeal 編程
+
+讓我們將一個示例中剛剛學到的東西放在一起，它還展示了 Wholemeal 編程風格的強大功能。考慮函數 `foobar`，定義如下：
 
 ```haskell
 foobar :: [Integer] -> Integer
@@ -249,36 +255,36 @@ foobar (x:xs)
 
 這似乎很簡單，但是不是很好的Haskell樣式。問題是
 
-- 一次做太多事情；和
-- 工作水平太低。
+- 一次做太多事情
+- 工作水平太低
 
-不必考慮要對每個元素做什麼，我們可以考慮使用已知的現有遞歸模式對整個輸入進行增量轉換。這是以下情況的慣用實現`foobar`：
+不必考慮要對每個元素做什麼，我們可以考慮使用已知的現有遞歸模式對整個輸入進行增量轉換。這是以下情況的慣用實現 `foobar`：
 
 ```haskell
 foobar' :: [Integer] -> Integer
-foobar' = sum . map (\x -> 7*x + 2) . filter (>3)
+foobar' = sum . map (\x -> 7*x + 2) . filter (>3) 
 ```
 
-這定義`foobar'`為三個函數的“管道”：首先，我們將列表中不大於三個的所有元素丟棄。接下來，我們對其餘列表的每個元素進行算術運算；最後，我們對結果求和。
+這定義 `foobar'` 為三個函數的 “管道(pipeline)” ：首先，我們丟棄列表中不大於三個的所有元素； 接下來，我們對其餘列表的每個元素進行算術運算； 最後，我們對結果求和
 
-請注意，在上面的示例中，`map`和`filter`已部分應用。例如，類型`filter`為
+請注意，在上面的示例中，部分應用了 `map` 和 `filter`。 例如，`filter` 的類型是
 
 ```haskell
 (a -> Bool) -> [a] -> [a]
 ```
 
-將它應用於`(>3)`（具有類型的`Integer -> Bool`）會產生一個類型的函數`[Integer] -> [Integer]`，這與將另一個函數組合在一起是正確的事情`[Integer]`。
+將它應用於 `(>3)` （具有類型的 `Integer -> Bool` ）會產生一個類型的函數 `[Integer] -> [Integer]` ，這與將另一個函數組合在一起是正確的事情 `[Integer]`。
 
-編碼的這種風格中，我們定義一個函數不參照它的參數，在一定意義上說的功能什麼*的*，而不是什麼它*做* -is被稱為“自由點”的風格。從上面的示例可以看出，它可能非常漂亮。甚至有人甚至說您應該始終努力使用無點樣式。但是太遠了，它會變得非常混亂。`lambdabot`在`#haskell`IRC信道有一個命令`@pl`用於使功能集成到相當的自由點表達式; 這是一個例子：
+我們在不參考函數自變量的情況下定義函數的編碼方式（從某種意義上說是什麼而不是函數）被稱為 point-free 風格。 從上面的示例可以看出，它可能非常漂亮。甚至有人甚至說您應該始終努力使用  point-free 風格。但走得太遠可能會變得非常混亂。#haskell IRC 頻道中的 lambdabot 有一個 @pl 命令，用於將函數轉換為等效的無點表達式； 這是一個例子：
 
 ```haskell
 @pl \f g x y -> f (x ++ g x) (g y)
 join . ((flip . ((.) .)) .) . (. ap (++)) . (.)
 ```
 
-這顯然*不是*一種改善！
+這顯然*不是* 一種改善！
 
-## ▌褶皺
+## ▌Folds 折疊
 
 列表上還有一個要討論的遞歸模式：折疊。以下是列表中的一些函數，它們遵循類似的模式：所有這些函數都以某種方式將列表中的元素“組合”為最終答案。
 
@@ -296,7 +302,7 @@ length' []     = 0
 length' (_:xs) = 1 + length' xs
 ```
 
-這三個功能有什麼共同點，有什麼不同？與往常一樣，該想法將是藉助定義高階函數的能力來抽像出變化的部分。
+這三個功能有什麼共同點，有什麼不同？ 與往常一樣，該想法將是藉助定義高階函數的能力來抽像出變化的部分
 
 ```haskell
 fold :: b -> (a -> b -> b) -> [a] -> b
@@ -304,15 +310,15 @@ fold z f []     = z
 fold z f (x:xs) = f x (fold z f xs)
 ```
 
-請注意如何`fold`基本上取代了`[]`用`z`並`(:)`用`f`，也就是說，
+請注意如何 `fold` 基本上取代了 `[]` 用 `z` 並 `(:) `替換為 `f`，也就是說
 
 ```haskell
 fold f z [a,b,c] == a `f` (b `f` (c `f` z))
 ```
 
-（如果`fold`從這個角度考慮，您也許可以弄清楚如何歸納`fold`為列表以外的數據類型……）
+（如果您從這個角度考慮 `fold`，您也許可以弄清楚如何將 `fold` 歸納為列表以外的數據類型……）
 
-現在，讓我們改寫`sum'`，`product'`和`length'`在以下方面`fold`：
+現在，讓我們用 `fold` 改寫 `sum'`， `product'` 和 `length'`：
 
 ```haskell
 sum''     = fold 0 (+)
@@ -320,23 +326,31 @@ product'' = fold 1 (*)
 length''  = fold 0 (\_ s -> 1 + s)
 ```
 
-（代替`(\_ s -> 1 + s)`我們也可以寫`(\_ -> (1+))`，甚至`(const (1+))`。）
+（除了用 `(\_ s -> 1 + s)` ，我們也可以寫 `(\_ -> (1+))` 甚至 `(const (1+))` ）
 
-當然，`fold`已經在標準Prelude中以名稱提供了[`foldr`](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#v:foldr)。參數的`foldr`順序略有不同，但功能完全相同。以下是一些Prelude函數，它們的定義如下`foldr`：
+當然，`fold` 已經在標準 Prelude 中提供了，名稱是 [`foldr`](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#v:foldr)。 `foldr` 的參數順序略有不同，但功能完全相同。以下是一些 Prelude 函數是使用  `foldr` 定義的：
 
-- `length` `:: [a] -> Int`
-- `sum` `:: Num a => [a] -> a`
-- `product` `:: Num a => [a] -> a`
-- `and` `:: [Bool] -> Bool`
-- `or` `:: [Bool] -> Bool`
-- `any` `:: (a -> Bool) -> [a] -> Bool`
-- `all` `:: (a -> Bool) -> [a] -> Bool`
+> 原始連接丟失，可參看 [Haskell : foldr](http://zvon.org/other/haskell/Outputprelude/foldr_f.html)
 
-還存在[`foldl`](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#v:foldl)“從左側”折疊的。那是，
+```haskell
+length :: [a] -> Int
+sum :: Num a => [a] -> a
+product :: Num a => [a] -> a
+and :: [Bool] -> Bool
+or :: [Bool] -> Bool
+any :: (a -> Bool) -> [a] -> Bool
+all :: (a -> Bool) -> [a] -> Bool
+```
+
+還存在 [`foldl`](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#v:foldl) “從左側”折疊的。那是
+
+> 原始連接丟失，可參看 [Haskell : foldl](http://zvon.org/other/haskell/Outputprelude/foldl_f.html)
 
 ```haskell
 foldr f z [a,b,c] == a `f` (b `f` (c `f` z))
 foldl f z [a,b,c] == ((z `f` a) `f` b) `f` c
 ```
 
-但是，通常應該使用[`foldl'`from`Data.List`](http://haskell.org/ghc/docs/latest/html/libraries/base/Data-List.html#v:foldl)代替，它的作用與之相同，`foldl`但效率更高。
+但是，通常應該使用 Data.List 中的 [`foldl'`](http://haskell.org/ghc/docs/latest/html/libraries/base/Data-List.html#v:foldl) 代替，它的作用與 `foldl` 之相同，但效率更高
+
+> 原始連接丟失，可參看 [Data.List foldl](http://hackage.haskell.org/package/base-4.14.0.0/docs/Data-List.html#g:3)
