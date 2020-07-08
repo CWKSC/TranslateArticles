@@ -52,6 +52,7 @@ layout: main
                 <div class="box-body">
                     <a class="cover" href="{{ post.url | prepend: site.baseurl }}">
                         <!-- {% include loader.html %} new --> 
+						<!-- new (no image show)
                         {% if post.optimized_image %}
                             <img src="/assets/img/placeholder.png" width="100%" data-url="{{ post.optimized_image }}" class="preload">
                             <noscript>
@@ -68,6 +69,7 @@ layout: main
                                 <img src="/assets/img/off.jpg" width="100%">
                             </noscript>
                         {% endif %}
+						-->
                         <!-- {% include new-post-tag.html date=post.date %} new -->
                         {% include read-icon.html %}
                     </a>
