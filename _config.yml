@@ -22,8 +22,8 @@ menu:
 #    url: /link_exchange
   - title: Tags 標籤
     url: /tags
-  - title: Feed 餵食 (๑´ㅂ`๑)
-    url: /feed.xml
+#  - title: Feed 餵食 (๑´ㅂ`๑)
+#    url: /feed.xml
 
 
 # Social Media Settings
