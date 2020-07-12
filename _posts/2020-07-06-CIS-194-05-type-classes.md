@@ -149,11 +149,11 @@ Prelude> :t (+)
 show :: Show a => a -> String
 ```
 
-那麼這是怎麼回事？
+這是怎麼回事？
 
 ## ▌Type classes 類型類別
 
-`Num`，`Eq`，`Ord`, 和 `Show` 是*類型類 (Type classes)*，和我們說 `(==)`，`(<)` 和 `(+)` 有 “類型類多態(type-class polymorphic)”。直觀地講，類型類對應於為其定義了某些操作 *的類型集*，並且類型類多態函數僅適用於作為所討論類型類實例的類型。作為示例，讓我們詳細研究 `Eq` 類型類。
+`Num`，`Eq`，`Ord`, 和 `Show` 是*類型類 (Type classes)*，我們說 `(==)`，`(<)` 和 `(+)` 有 “類型類多態(type-class polymorphic)”。直觀地講，類型類對應於為其定義了某些操作 *的類型集*，並且類型類多態函數僅適用於所討論的類型類實例。作為示例，讓我們詳細研究 `Eq` 類型類
 
 ```haskell
 class Eq a where
@@ -161,19 +161,19 @@ class Eq a where
   (/=) :: a -> a -> Bool
 ```
 
-我們可以這樣閱讀：`Eq` 聲明為帶有單個參數的類型類 `a`。任何 `a` 要成為的*實例*的類型都 `Eq` 必須定義兩個函數，`(==)` 並 `(/=)` 使用指定的類型簽名。例如，要創建 `Int` 一個實例，`Eq` 我們必須定義 `(==) :: Int -> Int -> Bool` 和 `(/=) :: Int -> Int -> Bool`。（當然，沒有必要，因為標準的 Prelude 已經為我們定義了一個 `Int` 實例 `Eq`。）
+我們可以這樣閱讀：`Eq` 聲明為帶有單個參數 `a` 的類型類。任何類型的 `a` 要成為 `Eq` 的 *實例* 的都必須定義兩個函數，`(==)` 和 `(/=)` ，並使用指定的類型簽名。例如，要創建 `Int` 一個實例，`Eq` 我們必須定義 `(==) :: Int -> Int -> Bool` 和 `(/=) :: Int -> Int -> Bool`。（當然，沒有必要，因為標準的 Prelude 已經為我們定義了一個 `Int` 實例 `Eq`）
 
-讓我們 `(==)` 再次看看類型：
+讓我們再次看看 `(==)` 的類型：
 
 ```haskell
 (==) :: Eq a => a -> a -> Bool
 ```
 
-在 `Eq a` 這到來之前的 `=>` 是一個*類型類的約束*。我們可以這樣理解：對於任何類型 `a`，*只要 `a` 是 `Eq`*  type *的實例*，`(==)` 都可以採用 type 的兩個值 `a` 並返回 a `Bool`。`(==)` 在不是的實例的某種類型上調用函數是類型錯誤 `Eq`。如果一個普通的多態類型是一個保證該函數將適用於調用者選擇的任何類型的承諾，則類型類多態函數是一個 *受限的* 保證，即該函數將適用於調用者選擇的任何類型，*只要*所選的類型是一個實例即可。所需類型的類別。
+`=>` 之前的 `Eq a` 是 *類型類約束* 。我們可以這樣理解：對於任何類型 `a`，對於任何類型的 `a`，只要 `a` 是 `Eq` 的實例，`(==)` 都可以採用兩個類型 `a` 的值並返回 `Bool`。在不是Eq實例的某種類型上調用函數 `(==)` 是類型錯誤。如果一個普通的多態類型是一個承諾，該函數將適用於調用者選擇的任何類型，則類型類多態函數是一個受限的承諾，即該函數將適用於調用者選擇的任何類型，只要選擇的類型是所需類型類的實例即可。
 
 需要注意的重要一點是，當使用 `(==)`（或任何類型類方法）時，編譯器*會*根據其參數的推斷類型使用類型推斷來確定 *應選擇哪種實現 `(==)`*。換句話說，這類似於在 Java 之類的語言中使用重載方法。
 
-為了更好地了解它在實際中的工作方式，讓我們創建自己的類型並 `Eq` 為其聲明一個實例
+為了更好地了解它在實際中的工作方式，讓我們創建自己的類型並為其聲明一個 `Eq` 實例。
 
 ```haskell
 data Foo = F Int | G Char
@@ -197,7 +197,7 @@ class Eq a where
 
 現在，任何聲明 `Eq` 實例的人都只需實現 `(==)`，他們將免費獲得 `(/=)` 。但是，如果由於某些原因他們想`(/=)`用自己的方法覆蓋默認實現，則也可以這樣做。
 
-實際上，`Eq` 該類實際上是這樣聲明的：
+實際上，`Eq` 該類是這樣聲明的：
 
 ```haskell
 class Eq a where
@@ -223,16 +223,16 @@ data Foo' = F' Int | G' Char
 
 1. 定義 Java 類時，必須聲明其實現的任何接口。另一方面，類型類實例是與相應類型的聲明分開聲明的，甚至可以放在單獨的模塊中。
 
-2. 可以為類型類方法指定的類型比為 Java 接口方法可以指定的簽名更通用，更靈活，尤其是當*多參數類型類*輸入圖片時。例如，假設一個假設類型類
+2. 可以為類型類方法指定的類型比為 Java 接口方法可以指定的簽名更通用，更靈活，尤其是當 *多參數類型類*  輸入圖片時。例如，考慮一個假設的類型類
 
    ```haskell
    class Blerg a b where
      blerg :: a -> b -> Bool
    ```
 
-   使用 `blerg` 達做*多分派*：其中實現 `blerg` 編譯器應該選擇取決於*兩種*類型 `a` 和 `b`。用 Java 沒有簡單的方法可以做到這一點。
+   使用 `blerg` 執行多次調度：編譯器取決於類型 `a` 和 `b` 選擇哪種 `blerg` 實現。 用 Java沒 有簡單的方法可以做到這一點
 
-   Haskell 類型類也可以輕鬆地處理二進制（或三進製或…）方法，如
+   Haskell 類型類也可以輕鬆地處理二進制（或三進制或 …）方法，如
 
    ```haskell
    class Num a where
@@ -240,26 +240,26 @@ data Foo' = F' Int | G' Char
      ...
    ```
 
-   在 Java 中，沒有很好的方法來執行此操作：一方面，兩個參數之一必須是“特權”參數，實際上是要 `(+)` 在其上調用方法，並且這種不對稱性很尷尬。此外，由於 Java 的子類型化，獲取某個接口類型的兩個參數並*不能*保證它們實際上是同一類型，這使得實現二進制運算符（例如 `(+)` 笨拙）（通常需要進行一些運行時類型檢查）成為可能。
+   在 Java 中，沒有很好的方法來執行此操作：一方面，兩個參數之一必須是 “特權(privileged)” 參數，實際上是要 `(+)` 在其上調用方法，並且這種不對稱性很尷尬。此外，由於 Java 的子類型化，獲取某個接口類型的兩個參數並 *不能* 保證它們實際上是同一類型，這使得實現二進制運算符（如 `(+)`）很尷尬（通常需要進行一些運行時類型檢查）
 
 ### ▌Standard type classes 標準類型類別
 
-這是您應該了解的其他一些標準類型類：
+這是您應該了解的一些其他標準類型類：
 
-- [Ord](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t%3AOrd) 用於其元素可以*完全排序的類型*，即可以比較任何兩個元素以查看哪個元素小於另一個元素。它提供了類似的比較操作 `(<)` 和 `(<=)`，也是 `compare` 函數。
+- [Ord](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t%3AOrd) 用於其元素可以 *完全排序的類型* ，即可以比較任何兩個元素以查看哪個元素小於另一個元素。它提供了類似的比較操作 `(<)` 和 `(<=)`，也是 `compare` 函數。
 
-- [Num](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t%3ANum) 用於“數字”類型，它支持加法，減法和乘法運算。需要注意的一件事是整數實際上是類型多態的類型：
+- [Num](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t%3ANum) 用於“數字”類型，它支持加法，減法和乘法運算。需要注意的一件事是整數實際上是類型類多態：
 
   ```haskell
   Prelude> :t 5
   5 :: Num a => a
   ```
 
-  這意味著像 `5` 這樣的文字可以用作 `Int`s，`Integer`s，`Double`s 或作為 `Num`（`Rational`，`Complex Double` 甚至是您定義的類型...）實例的任何其他類型。
+  這意味著像 `5` 這樣的文字可以用作 `Int`s，`Integer`s，`Double`s 或作為 `Num `實例的任何其他類型（`Rational`，`Complex Double` 甚至是您定義的類型 ...）
 
 - [Show](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t%3AShow) 定義了方法 `show`，該方法用於將值轉換為 `String`s。
 
-- [Read](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#v:Eq/Read) 是的雙重性 `Show`。
+- [Read](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#v:Eq/Read) 是的雙重性(dual of) `Show`。    PS:（ dual of 是重複的意思？）
 
 - [Integral](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t%3AIntegral) 表示整數類型，例如 `Int` 和 `Integer`。
 
@@ -320,7 +320,7 @@ sumL x = sum (toList x)
 sumL :: Listable a => a -> Int
 ```
 
-這很有意義：由於使用，因此 `sumL` 僅適用於作為實例的類型。這個如何？ `Listable``toList`
+這很有意義：`sumL` 僅適用於 `Listable` 實例的類型，因為它使用 `toList`。 這個如何？
 
 ```haskell
 foo x y = sum (toList x) == sum (toList y) || x < y
@@ -332,7 +332,7 @@ foo x y = sum (toList x) == sum (toList y) || x < y
 foo :: (Listable a, Ord a) => a -> a -> Bool
 ```
 
-也就是說，`foo` 工作在它們的實例類型 *都*  `Listable` 和 `Ord`，因為它同時使用 `toList` 和比較的參數。
+也就是說，由於 `foo` 同時使用了 `toList` 和對參數進行比較，因此對同時屬於 `Listable` 和 `Ord` 的實例的類型起作用
 
 作為最後一個更複雜的示例，請考慮以下實例：
 
