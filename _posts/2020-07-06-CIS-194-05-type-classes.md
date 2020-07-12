@@ -195,7 +195,7 @@ class Eq a where
   x /= y = not (x == y)
 ```
 
-現在，任何聲明 `Eq` 實例的人都只需實現 `(==)`，他們將免費獲得 `(/=)` 。但是，如果由於某些原因他們想`(/=)`用自己的方法覆蓋默認實現，則也可以這樣做。
+現在，任何聲明 `Eq` 實例的人都只需實現 `(==)`，他們將免費獲得 `(/=)` 。但是，如果由於某些原因他們想`(/=)` 用自己的方法覆蓋默認實現，則也可以這樣做。
 
 實際上，`Eq` 該類是這樣聲明的：
 
@@ -219,11 +219,13 @@ data Foo' = F' Int | G' Char
 
 ### ▌Type classes and Java interfaces 類型類和 Java 接口
 
-類型類與 Java 接口非常相似。兩者都定義了一組實現特定操作列表的類型/類。但是，有幾種重要的方法可以使類型類比 Java 接口更通用：
+類型類與 Java 接口非常相似。兩者都定義了一組實現特定操作列表的類型 / 類。但是，有幾種重要的方法可以使類型類比 Java 接口更通用：
 
-1. 定義 Java 類時，必須聲明其實現的任何接口。另一方面，類型類實例是與相應類型的聲明分開聲明的，甚至可以放在單獨的模塊中。
+1. 定義 Java 類時，必須聲明其實現的任何接口。另一方面，類型類實例是與相應類型的聲明分開聲明的，甚至可以放在單獨的模塊中
 
-2. 可以為類型類方法指定的類型比為 Java 接口方法可以指定的簽名更通用，更靈活，尤其是當 *多參數類型類*  輸入圖片時。例如，考慮一個假設的類型類
+2. 可以為類型類方法指定的類型比為 Java 接口方法可以指定的簽名更通用、更靈活，尤其是當 *多參數類型類*  輸入圖片時。例如，考慮一個假設的類型類
+
+   > The types that can be specified for type class methods are more general and flexible than the signatures that can be given for Java interface methods, especially when *multi-parameter type classes* enter the picture. For example, consider a hypothetical type class
 
    ```haskell
    class Blerg a b where
@@ -242,6 +244,8 @@ data Foo' = F' Int | G' Char
 
    在 Java 中，沒有很好的方法來執行此操作：一方面，兩個參數之一必須是 “特權(privileged)” 參數，實際上是要 `(+)` 在其上調用方法，並且這種不對稱性很尷尬。此外，由於 Java 的子類型化，獲取某個接口類型的兩個參數並 *不能* 保證它們實際上是同一類型，這使得實現二進制運算符（如 `(+)`）很尷尬（通常需要進行一些運行時類型檢查）
 
+   > There is no nice way to do this in Java: for one thing, one of the two arguments would have to be the “privileged” one which is actually getting the `(+)` method invoked on it, and this asymmetry is awkward. Furthermore, because of Java’s subtyping, getting two arguments of a certain interface type does *not* guarantee that they are actually the same type, which makes implementing binary operators such as `(+)` awkward (usually requiring some runtime type checks).
+
 ### ▌Standard type classes 標準類型類別
 
 這是您應該了解的一些其他標準類型類：
@@ -255,11 +259,11 @@ data Foo' = F' Int | G' Char
   5 :: Num a => a
   ```
 
-  這意味著像 `5` 這樣的文字可以用作 `Int`s，`Integer`s，`Double`s 或作為 `Num `實例的任何其他類型（`Rational`，`Complex Double` 甚至是您定義的類型 ...）
+  這意味著像 `5` 這樣的文字可以用作 `Int`s，`Integer`s，`Double`s 或作為 `Num` 實例的任何其他類型（`Rational`，`Complex Double` 甚至是您定義的類型 ...）
 
 - [Show](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t%3AShow) 定義了方法 `show`，該方法用於將值轉換為 `String`s。
 
-- [Read](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#v:Eq/Read) 是的雙重性(dual of) `Show`。    PS:（ dual of 是重複的意思？）
+- [Read](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#v:Eq/Read) 是的雙重性(dual of) `Show`。    PS:（ dual of 或者是重複的意思？）
 
 - [Integral](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t%3AIntegral) 表示整數類型，例如 `Int` 和 `Integer`。
 
@@ -278,7 +282,7 @@ class Listable a where
 toList :: Listable a => a -> [Int]
 ```
 
-讓我們為做一些實例 `Listable`。首先，`Int` 可以轉換為 `[Int]` 只通過創建一個單列表，並且 `Bool` 同樣可以轉換，也就是說，通過翻譯 `True` 來 `1` 和 `False` 到 `0`：
+讓我們為做一些實例 `Listable`。首先，僅通過創建一個單列表就可以將一個 `Int` 可以轉換為 `[Int]` ，並且 `Bool` 同樣可以轉換，也就是說，通過翻譯 `True` 來 `1` 和 `False` 到 `0`：
 
 ```haskell
 instance Listable Int where
@@ -290,7 +294,7 @@ instance Listable Bool where
   toList False = [0]
 ```
 
-我們無需做任何工作即可將的列表轉換 `Int` 為的列表 `Int`：
+我們無需做任何工作即可將 `Int` 列表轉換為 `Int` 列表：
 
 ```haskell
 instance Listable [Int] where
