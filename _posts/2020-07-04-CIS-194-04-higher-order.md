@@ -1,7 +1,7 @@
 ---
 date: 2020-07-04 19:00:00
 layout: post
-title: "CIS 194 04 Higher-order programming and type inference"
+title: "CIS 194 04 Higher-order programming and type inference 高階編程和類型推斷"
 subtitle: 
 description: 
 image: https://cdn.jsdelivr.net/gh/CWKSC/MyResources/Common/pixel300x1_Transparent.png

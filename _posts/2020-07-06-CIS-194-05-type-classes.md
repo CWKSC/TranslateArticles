@@ -1,7 +1,7 @@
 ---
 date: 2020-07-06 19:00:00
 layout: post
-title: "CIS 194 05 More polymorphism and type classes"
+title: "CIS 194 05 More polymorphism and type classes 更多多態和類型類"
 subtitle: 
 description: 
 image: 
