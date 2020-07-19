@@ -21,6 +21,6 @@ If you think the translated article infringes your copyright, please post an iss
 
 若果你認為翻譯的文章侵犯到您的版權，請到 [這裏](https://github.com/CWKSC/BlogComment/issues) 提出 issue
 
-Or send an email to sam979451653@gmail.com, I will delete related articles immediately
+Or send an email to cwksc.person@gmail.com, I will delete related articles immediately
 
-或發送電郵到 sam979451653@gmail.com，我會立刻刪除相關文章
+或發送電郵到 cwksc.person@gmail.com，我會立刻刪除相關文章
