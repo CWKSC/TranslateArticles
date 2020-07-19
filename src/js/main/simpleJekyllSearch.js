@@ -55,7 +55,6 @@
                         i=properties.length;
                     }
             });
-			console.log(matches);
             return matches;
 
         }
