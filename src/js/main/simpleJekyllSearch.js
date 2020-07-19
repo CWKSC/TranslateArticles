@@ -41,7 +41,6 @@
         function registerEvent(){
             origThis.keyup(function(e){
                 if($(this).val().length){
-					console.log("Test");
                     writeMatches( performSearch($(this).val()));
                 }else{
                     clearSearchResults();
