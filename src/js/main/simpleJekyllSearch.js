@@ -9,10 +9,7 @@
             noResults       : '<p>Oh no! We didn\'t find anything :(</p>'
         }, options);
 
-		
         var properties = settings.jsonFormat.split(',');
-		
-		console.log(properties);
 
         var jsonData = [],
             origThis = this,
