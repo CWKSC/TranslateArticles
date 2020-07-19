@@ -12,6 +12,7 @@
 		
         var properties = settings.jsonFormat.split(',');
 		
+		console.log("simpleJekyllSearch");
 		console.log(properties);
 
         var jsonData = [],
@@ -44,12 +45,14 @@
 					console.log("Test");
                     writeMatches( performSearch($(this).val()));
                 }else{
+					console.log("Test clearSearchResults");
                     clearSearchResults();
                 }
             });
         }
 
         function performSearch(str){
+			console.log("performSearch");
             var matches = [];
 
             $.each(jsonData,function(i,entry){
