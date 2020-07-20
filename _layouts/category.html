@@ -13,9 +13,10 @@
                         {% if post.category == page.slug %}
                             <article class="box-item">
                                 <div class="box-body">
-                                    {% if post.image %}
+                                    <{% if post.image %}
                                         <a class="cover" href="{{ post.url | prepend: site.baseurl }}">
-                                            <!-- {% include loader.html %} new -->
+                                            <!-- new (no image show and loader)
+											{% include loader.html %} 
                                             {% if post.optimized_image %}
                                                 <img src="/assets/img/placeholder.png" width="100%" data-url="{{ post.optimized_image }}" class="preload">
                                                 <noscript>
@@ -32,8 +33,8 @@
                                                     <img src="/assets/img/off.jpg" width="100%">
                                                 </noscript>
                                             {% endif %}
-                                            {% include new-post-tag.html date=post.date %}
-                                            {% include read-icon.html %}
+                                            {% include new-post-tag.html date=post.date %} 
+                                            {% include read-icon.html %} new -->
                                         </a>
                                     {% endif %}
                                     <div class="box-info">
