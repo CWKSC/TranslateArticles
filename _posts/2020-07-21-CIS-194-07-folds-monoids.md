@@ -160,7 +160,7 @@ eval2 :: ExprT -> Integer
 eval2 = exprTFold id (+) (*)
 ```
 
-現在，我們可以輕鬆地執行其他操作，例如計算表達式中 文字的數量：
+現在，我們可以輕鬆地執行其他操作，例如計算表達式中，文字的數量：
 
 ```haskell
 numLiterals :: ExprT -> Int
@@ -189,13 +189,15 @@ class Monoid m where
 (<>) = mappend
 ```
 
-`(<>) `被定義為 `mappend` 的同義詞（自GHC 7.4.1起），僅僅是因為編寫 `mappend` 很繁瑣
+`(<>)` 被定義為 `mappend` 的同義詞（自GHC 7.4.1起），僅僅是因為編寫 `mappend` 很繁瑣
 
 作為 `Monoid` 實例的類型具有一個稱為 `mempty` 的特殊元素，以及一個二進制操作 `mappend`（縮寫為 `(<>)`），它使用該類型的兩個值並產生另一個值。 目的是：`mempty` 是 `<>` 的標識，而 `<>` 是關聯的； 也就是說，對於所有 `x`, `y` 和 `z`
 
-1. `mempty <> x == x`
-2. `x <> mempty == x`
-3. `(x <> y) <> z == x <> (y <> z)`
+```haskell
+mempty <> x == x
+x <> mempty == x
+(x <> y) <> z == x <> (y <> z)
+```
 
 關聯法則意味著我們可以明確地寫
 
@@ -208,8 +210,6 @@ a <> b <> c <> d <> e
 還有 `mconcat`，用於組合整個值列表。 默認情況下，它是使用 `foldr` 實現的，但是它包含在 `Monoid` 類中，因為 `Monoid` 的特定實例可能具有更有效的實現方式
 
 `Monoid` 一旦知道要尋找它們，它就會出現在*任何地方*。讓我們編寫一些實例（僅用於實踐；這些都在標準庫中）
-
-> `Monoid`s show up *everywhere*, once you know to look for them. Let’s write some instances (just for practice; these are all in the standard libraries).
 
 列表在串聯下形成一個 monoid：
 
