@@ -13,9 +13,9 @@ This blog is a translation of some website documentation articles
 
 這個博客是一些網站文檔文章的翻譯
 
-Sometimes it’s just a google translation
+Sometimes it’s just a google translation, Then modify
 
-有時候只是單純經過一次 google 翻譯 
+有時候只是單純經過一次 google 翻譯，然後再慢慢修修補補
 
 If you think the translated article infringes your copyright, please post an issue [here](https://github.com/CWKSC/BlogComment/issues)
 

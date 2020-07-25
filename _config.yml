@@ -1,7 +1,7 @@
 # Site Settings
 name: CWKSC's 翻譯文章
 title: CWKSC's 翻譯文章
-description: CWKSC's blog, by using Jekflix, Jekflix is a template for Jekyll inspired by Netflix and made by Thiago Rossener.
+description: CWKSC's 翻譯文章，這個博客是一些網站文檔文章的翻譯，有時候只是單純經過一次 google 翻譯，然後再慢慢修修補補
 tags:
   - blog
   - template
