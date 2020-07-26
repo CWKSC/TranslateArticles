@@ -29,11 +29,11 @@ CIS 194 第 10 週
 - [Applicative Functors](http://learnyouahaskell.com/functors-applicative-functors-and-monoids#applicative-functors) from Learn You a Haskell
 - [The Typeclassopedia](http://www.haskell.org/haskellwiki/Typeclassopedia)
 
-## ▌動機
+## ▌Motivation 動機
 
-考慮以下`Employee`類型：
+考慮以下 `Employee` 類型：
 
-```
+```haskell
 type Name = String
 
 data Employee = Employee { name    :: Name
@@ -41,157 +41,157 @@ data Employee = Employee { name    :: Name
                 deriving Show
 ```
 
-當然，`Employee`構造函數具有類型
+當然， `Employee` 構造函數具有類型
 
-```
+```haskell
 Employee :: Name -> String -> Employee
 ```
 
-也就是說，如果我們具有`Name`和`String`，則可以應用`Employee`構造函數來構建`Employee`對象。
+也就是說，如果我們具有 `Name` 和 `String`，則可以應用 `Employee` 構造函數來構建 `Employee` 對象
 
-但是，假設我們沒有a `Name`和a `String`；我們實際擁有的是一個`Maybe Name`和一個`Maybe String`。也許它們來自解析充滿錯誤的某些文件，或者來自某些字段可能留為空白的形式，或者來自某種形式。我們不一定可以製作一個`Employee`。但是當然我們可以做一個`Maybe Employee`。也就是說，我們想使用我們的`(Name -> String -> Employee)`功能並將其轉換為`(Maybe Name -> Maybe String -> Maybe Employee)`功能。我們可以用這種類型寫東西嗎？
+但是，假設我們沒有 `Name` 和 `String` 。我們實際上擁有的可能是 `Maybe Name` 和 `Maybe String` 。也許它們來自解析充滿錯誤的某些文件，或者來自某些字段可能留為空白的形式，或者來自某種形式。 我們不一定能做出 `Employee`。 但可以肯定的是，我們可以做出 `Maybe Employee`。 也就是說，我們想使用 `(Name -> String -> Employee)` 函數並將其轉換為 `(Maybe Name -> Maybe String -> Maybe Employee)` 函數。 我們可以用這種類型寫某些東西嗎？
 
-```
+```haskell
 (Name -> String -> Employee) ->
 (Maybe Name -> Maybe String -> Maybe Employee)
 ```
 
-當然可以，我完全相信您現在就可以在睡眠中寫下它。我們可以想像它是如何工作的：如果名稱或字符串是`Nothing`，我們就走`Nothing`了；如果兩者都為`Just`，則`Employee`使用`Employee`構造函數（封裝在中`Just`）得出一個構建體。但是，讓我們繼續前進...
+當然可以，我完全相信您現在就可以在睡眠中寫下它。我們可以想像它是如何工作的：如果名稱或字符串是 `Nothing` ，我們得到 `Nothing`；如果兩者都為 `Just` ，我們得到一個使用 `Employee` 構造函數（包裝在 `Just` 中）構建的 `Employee`。 但是，讓我們繼續前進 ...
 
-考慮一下：現在有a `Name`和a 而不是`String`a `[Name]`和a `[String]`。也許我們可以擺脫`[Employee]`困境？現在我們要
+考慮一下：現在有了 `[Name]` 和 `[String]`，而不是 `Name` 和 `String`。 也許我們可以從中獲得一名 `[Employee]`？ 現在我們要
 
-```
+```haskell
 (Name -> String -> Employee) ->
 ([Name] -> [String] -> [Employee])
 ```
 
-我們可以想像兩種不同的工作方式：我們可以將對應的`Name`s和`String`s 匹配成`Employee`s；或者我們可以通過所有可能的方式將`Name`s和`String`s 配對。
+我們可以想像兩種不同的工作方式：我們可以將相應的 `Name`s 和 `String`s 匹配起來組成 `Employee`s ； 或者我們可以通過所有可能的方式將 `Name` 和 `String` 配對
 
-還是這樣：我們有一個`(e -> Name)`and `(e -> String)`用於某種類型`e`。例如，也許`e`是一些巨大的數據結構，並且我們有一些函數告訴我們如何從中提取a `Name`和a `String`。我們可以將其製成一個`(e -> Employee)`，即`Employee`從相同結構中提取的方法嗎？
+或如何處理：對於某些類型 `e`，我們有一個 `(e -> Name)` 和 `(e -> String)`。 例如，也許 `e` 是一些巨大的數據結構，並且我們有函數告訴我們如何從中提取 `Name` 和 `String`。 我們能否將其變成 `(e -> Employee)`，即從相同結構中提取 `Employee` 的配方？
 
-```
+```haskell
 (Name -> String -> Employee) ->
 ((e -> Name) -> (e -> String) -> (e -> Employee))
 ```
 
-沒問題，這一次實際上只有一種編寫此函數的方法。
+沒問題，這一次實際上只有一種編寫此函數的方法
 
-## ▌泛化
+## ▌Generalizing 泛化
 
-既然我們已經看到了這種模式的用處，讓我們概括一下。我們想要的函數類型實際上看起來像這樣：
+現在，我們已經看到了這種模式的實用性，讓我們概括一下。 我們想要的函數類型實際上看起來像這樣：
 
-```
+```haskell
 (a -> b -> c) -> (f a -> f b -> f c)
 ```
 
-嗯，這看起來很熟悉……與的類型非常相似`fmap`！
+嗯，這看起來很熟悉……與 `fmap` 的類型非常相似！
 
-```
+```haskell
 fmap :: (a -> b) -> (f a -> f b)
 ```
 
-唯一的區別是額外的論點。我們可以調用所需的函數`fmap2`，因為它需要兩個參數的函數。也許我們可以`fmap2`根據來寫`fmap`，所以我們只需要`Functor`限制以下內容`f`：
+唯一的區別是一個額外的參數。我們可以調用所需的函數 `fmap2`，因為它帶有兩個參數的函數。 也許我們可以用 `fmap` 來寫 `fmap2` ，所以我們只需要對 `f` 施加 `Functor` 約束：
 
-```
+```haskell
 fmap2 :: Functor f => (a -> b -> c) -> (f a -> f b -> f c)
 fmap2 h fa fb = undefined
 ```
 
-盡力而為，但是`Functor`並不能給我們足夠的執行力`fmap2`。怎麼了？我們有
+盡我們所能，但是， `Functor` 並沒有給我們足夠的力量來實現 `fmap2`。 怎麼了？ 我們有
 
-```
+```haskell
 h  :: a -> b -> c
 fa :: f a
 fb :: f b
 ```
 
-請注意，我們也可以編寫`h`as 的類型`a -> (b -> c)`。因此，我們有一個採用的函數`a`，並且我們有一個類型的值`f a`…我們唯一可以做的就是使用`fmap`將該函數移到上`f`，從而得到一個類型的結果：
+注意，我們也可以將 `h` 的類型寫為 `a -> (b -> c)` 。 因此，我們有一個採用 `a` 的函數，並且我們有一個類型為 `f a` 的值 … 我們唯一能做的就是使用 `fmap` 將函數移到 `f` 之上，從而得到類型為結果：
 
-```
+```haskell
 h         :: a -> (b -> c)
 fmap h    :: f a -> f (b -> c)
 fmap h fa :: f (b -> c)
 ```
 
-好，現在我們有了某種類型的`f (b -> c)`東西和某種類型的東西`f b`……這就是我們所困的地方！`fmap`不再有幫助。它為我們提供了一種將函數應用於`Functor`上下文中的值的方法，但是我們現在需要的是將*自身在`Functor`上下文中*的函數應用於*上下文*中的值`Functor`。
+好的，現在我們有了 `f (b -> c) ` 類型的東西和 `f b` 類型的東西 …… 這就是我們被困住的地方！ `fmap` 不再有幫助。 它為我們提供了一種將函數應用於 `Functor` 上下文中的值的方法，但是我們現在需要的是將本身在 `Functor` 上下文中的函數應用於 `Functor` 上下文中的值
 
-## ▌適用性
+## ▌Applicative 適用性
 
-可能進行這種“上下文應用”的函子稱為*applicative*，並且`Applicative`類（在中定義[`Control.Applicative`](http://haskell.org/ghc/docs/latest/html/libraries/base/Control-Applicative.html)）捕獲了這種模式。
+可能進行這種 “上下文應用” 的函子稱為 *applicative*，並且 `Applicative` 類（在 [`Control.Applicative`](http://haskell.org/ghc/docs/latest/html/libraries/base/Control-Applicative.html) 中定義）捕獲了這種模式
 
-```
+```haskell
 class Functor f => Applicative f where
   pure  :: a -> f a
   (<*>) :: f (a -> b) -> f a -> f b
 ```
 
-該`(<*>)`運營商（通常發音為“AP”，簡稱“申請”）封裝“上下文應用程序”的正是這個道理。還要注意的是，`Applicative`類需要它的實例是實例`Functor`為好，這樣我們就可以隨時使用`fmap`與實例`Applicative`。最後，請注意，`Applicative`還有另一個方法，`pure`它允許我們將類型的值注入`a`到容器中。現在，有趣的是，這`fmap0`將是`pure`：
+`(<*>)` 運算符（通常發音為“ ap”，是“ apply”的縮寫）完全封裝了 “上下文應用程序” 這一原理。 還要注意， `Applicative` 類也要求其實例也是 `Functor` 的實例，因此我們始終可以將 `fmap` 與 `Applicative` 的實例一起使用。 最後，請注意，`Applicative` 還具有另一種方法 `pure` ，該方法使我們可以將類型 `a` 的值注入到容器中。 現在，有趣的是，`fmap0` 是 `pure` 的另一個合理名稱：
 
-```
+```haskell
 pure  :: a             -> f a
 fmap  :: (a -> b)      -> f a -> f b
 fmap2 :: (a -> b -> c) -> f a -> f b -> f c
 ```
 
-現在`(<*>)`，我們可以實現了`fmap2`，它在標準庫中實際上稱為`liftA2`：
+有了 `(<*>)` 之後，我們就可以實現 `fmap2` 了，它在標準庫中實際上稱為 `liftA2`：
 
-```
+```haskell
 liftA2 :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
 liftA2 h fa fb = (h `fmap` fa) <*> fb
 ```
 
-實際上，這種模式非常普遍，因此`Control.Applicative`定義`(<$>)`為的同義詞`fmap`，
+實際上，這種模式非常普遍，因此 `Control.Applicative` 定義 `(<$>)` 為 `fmap` 的同義詞
 
-```
+```haskell
 (<$>) :: Functor f => (a -> b) -> f a -> f b
 (<$>) = fmap
 ```
 
 這樣我們就可以寫
 
-```
+```haskell
 liftA2 h fa fb = h <$> fa <*> fb
 ```
 
-那`liftA3`呢
+那 `liftA3` 呢
 
-```
+```haskell
 liftA3 :: Applicative f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d
 liftA3 h fa fb fc = ((h <$> fa) <*> fb) <*> fc
 ```
 
-（注意，優先級和的結合性`(<$>)`和`(<*>)`實際上以這樣的方式，上述的所有的括號是不必要的定義）。
+（注意，`(<$>)`和`(<*>)` 的優先級和結合性實際上以這樣的方式，上述的所有的括號是不必要的定義）
 
-好漂亮！與從`fmap`到`liftA2`（需要從`Functor`到泛化`Applicative`）的跳轉不同，從`liftA2`到`liftA3`（從那裡到`liftA4`…）跳轉不需要任何額外的功能— `Applicative`足夠。
+好漂亮！與從 `fmap` 到 `liftA2` （需要從 `Functor` 到泛化 `Applicative`）的跳轉不同，從 `liftA2` 到 `liftA3` （然後從那裡到 `liftA4` …）跳轉不需要任何額外的功能 —— `Applicative `就足夠了
 
-其實，當我們擁有所有的參數，像這樣我們平時也懶得打電話`liftA2`，`liftA3`等，但只使用`f <$> x <*> y <*> z <*> ...`直接模式。（不過`liftA2`，朋友確實會派上用場進行部分應用。）
+實際上，當我們擁有所有這樣的參數時，我們通常不必費心調用 `liftA2`, `liftA3` 等，而是直接使用 `f <$> x <*> y <*> z <*> ...` 模式。（但是，`liftA2` 和朋友確實在部分應用會派上用場）
 
-但是呢`pure`？`pure`是我們想要的一些功能應用到論據一些仿函數的背景情況`f`，但是一個或多個自變量是*不是*在`f`-those參數是“純粹的”，可以這麼說。在申請之前，我們可以先將`pure`它們提升到`f`第一位。像這樣：
+但是 `pure` 呢？`pure `用於需要在某個函子 `f` 的上下文中將某些函數應用於自變量，但其中一個或多個自變量不在 `f` 中的情況 —— 可以說，這些自變量是“純”的。 在應用之前，我們可以先使用 `pure` 將它們提升到 `f`。 像這樣：
 
-```
+```haskell
 liftX :: Applicative f => (a -> b -> c -> d) -> f a -> b -> f c -> f d
 liftX h fa b fc = h <$> fa <*> pure b <*> fc
 ```
 
-## ▌適用法律
+## ▌Applicative laws 適用定律
 
-只有以下一項真正“有趣”的法則`Applicative`：
+對於 `Applicative`，只有一個真正“有趣”的定律：
 
-```
+```haskell
 f `fmap` x === pure f <*> x
 ```
 
-將功能映射到`f`容器上`x`應該產生與首先將功能注入到容器中，然後將其應用於`x`with 相同的結果`(<*>)`。
+將函數 `f` 映射到容器 `x` 上應獲得與首先將函數注入容器中，然後使用 `(<*>)` 將其應用於 `x` 相同的結果
 
-還有其他法律，但它們沒有啟發性。如果您確實需要，可以自己閱讀。
+還有其他定律，但它們沒有啟發性。如果您確實需要，可以自己閱讀。
 
-## ▌適用實例
+## ▌Applicative examples 適用實例
 
-**也許**
+### `Maybe`
 
-讓我們嘗試以`Applicative`開頭的一些實例`Maybe`。`pure`通過將值注入`Just`包裝器來工作；`(<*>)`是可能失敗的功能應用程序。結果是`Nothing`函數或其參數是否為。
+讓我們嘗試從 `Maybe` 開始編寫一些 `Applicative` 實例。 通過將值注入到 `Just` 包裝器中來進行純工作； `(<*>)` 是可能存在故障的功能應用程序。 如果函數或其參數為空，則結果為 `Nothing`
 
-```
+```haskell
 instance Applicative Maybe where
   pure              = Just
   Nothing <*> _     = Nothing
@@ -201,7 +201,7 @@ instance Applicative Maybe where
 
 讓我們來看一個例子：
 
-```
+```haskell
 m_name1, m_name2 :: Maybe Name
 m_name1 = Nothing
 m_name2 = Just "Brent"
