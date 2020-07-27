@@ -14,6 +14,7 @@ paginate: false
 math: true
 ---
 
-[图解 Functor, Applicative 和 Monad | Forec's Notes](http://blog.forec.cn/2017/03/02/translation-adit-faamip/)
+ <a href="http://blog.forec.cn/2017/03/02/translation-adit-faamip/">图解 Functor, Applicative 和 Monad | Forec's Notes</a>
 
 形象化地解釋了 Functor, Applicative 和 Monad
+
