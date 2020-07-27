@@ -35,8 +35,8 @@ CIS 194 第 10 週
 type Name = String
 
 data Employee = Employee { name    :: Name
-                         , phone   :: String }
-                deriving Show
+                           , phone   :: String }
+                  deriving Show
 ```
 
 `Employee` 構造函數具有類型
@@ -113,7 +113,7 @@ fmap h fa :: f (b -> c)
 
 好的，現在我們有了 `f (b -> c)` 類型的東西和 `f b` 類型的東西 …… 這就是我們被困住的地方！ `fmap` 不再有幫助。 它為我們提供了一種將函數應用於 `Functor` 上下文中的值的方法，但是我們現在需要的是將本身在 `Functor` 上下文中的函數應用於 `Functor` 上下文中的值
 
-## ▌Applicative 適用性
+## ▌Applicative 
 
 可能進行這種 “上下文應用” 的函子稱為 *applicative*，並且 `Applicative` 類（在 [`Control.Applicative`](http://haskell.org/ghc/docs/latest/html/libraries/base/Control-Applicative.html) 中定義）捕獲了這種模式
 
@@ -171,7 +171,7 @@ liftX :: Applicative f => (a -> b -> c -> d) -> f a -> b -> f c -> f d
 liftX h fa b fc = h <$> fa <*> pure b <*> fc
 ```
 
-## ▌Applicative laws 適用定律
+## ▌Applicative laws / Applicative 定律
 
 對於 `Applicative`，只有一個真正“有趣”的定律：
 
@@ -181,9 +181,9 @@ f `fmap` x === pure f <*> x
 
 將函數 `f` 映射到容器 `x` 上應獲得與首先將函數注入容器中，然後使用 `(<*>)` 將其應用於 `x` 相同的結果
 
-還有其他定律，但它們沒有啟發性。如果您確實需要，可以自己閱讀。
+還有其他定律，但它們沒有啟發性。如果您確實需要，可以自己閱讀
 
-## ▌Applicative examples 適用實例
+## ▌Applicative examples / Applicative 例子
 
 `Maybe`
 
