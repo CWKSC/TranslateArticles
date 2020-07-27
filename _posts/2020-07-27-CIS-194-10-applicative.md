@@ -17,8 +17,6 @@ math: true
 
 Source: [10-applicative](https://www.seas.upenn.edu/~cis194/spring13/lectures/10-applicative.html)
 
-> Translation not finish
-
 ## ▌Applicative functors, Part I 適用函子，第一部分
 
 CIS 194 第 10 週
@@ -41,7 +39,7 @@ data Employee = Employee { name    :: Name
                 deriving Show
 ```
 
-當然， `Employee` 構造函數具有類型
+`Employee` 構造函數具有類型
 
 ```haskell
 Employee :: Name -> String -> Employee
@@ -84,7 +82,7 @@ Employee :: Name -> String -> Employee
 (a -> b -> c) -> (f a -> f b -> f c)
 ```
 
-嗯，這看起來很熟悉……與 `fmap` 的類型非常相似！
+嗯，這看起來很熟悉 …… 與 `fmap` 的類型非常相似！
 
 ```haskell
 fmap :: (a -> b) -> (f a -> f b)
@@ -97,7 +95,7 @@ fmap2 :: Functor f => (a -> b -> c) -> (f a -> f b -> f c)
 fmap2 h fa fb = undefined
 ```
 
-盡我們所能，但是， `Functor` 並沒有給我們足夠的力量來實現 `fmap2`。 怎麼了？ 我們有
+盡我們所能，但是 `Functor` 並沒有給我們足夠的力量來實現 `fmap2`。 怎麼了？ 我們有
 
 ```haskell
 h  :: a -> b -> c
@@ -113,7 +111,7 @@ fmap h    :: f a -> f (b -> c)
 fmap h fa :: f (b -> c)
 ```
 
-好的，現在我們有了 `f (b -> c) ` 類型的東西和 `f b` 類型的東西 …… 這就是我們被困住的地方！ `fmap` 不再有幫助。 它為我們提供了一種將函數應用於 `Functor` 上下文中的值的方法，但是我們現在需要的是將本身在 `Functor` 上下文中的函數應用於 `Functor` 上下文中的值
+好的，現在我們有了 `f (b -> c)` 類型的東西和 `f b` 類型的東西 …… 這就是我們被困住的地方！ `fmap` 不再有幫助。 它為我們提供了一種將函數應用於 `Functor` 上下文中的值的方法，但是我們現在需要的是將本身在 `Functor` 上下文中的函數應用於 `Functor` 上下文中的值
 
 ## ▌Applicative 適用性
 
@@ -160,13 +158,13 @@ liftA3 :: Applicative f => (a -> b -> c -> d) -> f a -> f b -> f c -> f d
 liftA3 h fa fb fc = ((h <$> fa) <*> fb) <*> fc
 ```
 
-（注意，`(<$>)`和`(<*>)` 的優先級和結合性實際上以這樣的方式，上述的所有的括號是不必要的定義）
+（注意，`(<$>)` 和 `(<*>)` 的優先級和結合性實際上以這樣的方式，上述的所有的括號是不必要的定義）
 
-好漂亮！與從 `fmap` 到 `liftA2` （需要從 `Functor` 到泛化 `Applicative`）的跳轉不同，從 `liftA2` 到 `liftA3` （然後從那裡到 `liftA4` …）跳轉不需要任何額外的功能 —— `Applicative `就足夠了
+好漂亮！與從 `fmap` 到 `liftA2` （需要從 `Functor` 到泛化 `Applicative`）的跳轉不同，從 `liftA2` 到 `liftA3` （然後從那裡到 `liftA4` …）跳轉不需要任何額外的功能 —— `Applicative` 就足夠了
 
 實際上，當我們擁有所有這樣的參數時，我們通常不必費心調用 `liftA2`, `liftA3` 等，而是直接使用 `f <$> x <*> y <*> z <*> ...` 模式。（但是，`liftA2` 和朋友確實在部分應用會派上用場）
 
-但是 `pure` 呢？`pure `用於需要在某個函子 `f` 的上下文中將某些函數應用於自變量，但其中一個或多個自變量不在 `f` 中的情況 —— 可以說，這些自變量是“純”的。 在應用之前，我們可以先使用 `pure` 將它們提升到 `f`。 像這樣：
+但是 `pure` 呢？`pure` 用於需要在某個函子 `f` 的上下文中將某些函數應用於自變量，但其中一個或多個自變量不在 `f` 中的情況 —— 可以說，這些自變量是“純”的。 在應用之前，我們可以先使用 `pure` 將它們提升到 `f`。 像這樣：
 
 ```haskell
 liftX :: Applicative f => (a -> b -> c -> d) -> f a -> b -> f c -> f d
@@ -187,7 +185,7 @@ f `fmap` x === pure f <*> x
 
 ## ▌Applicative examples 適用實例
 
-### `Maybe`
+`Maybe`
 
 讓我們嘗試從 `Maybe` 開始編寫一些 `Applicative` 實例。 通過將值注入到 `Just` 包裝器中來進行純工作； `(<*>)` 是可能存在故障的功能應用程序。 如果函數或其參數為空，則結果為 `Nothing`
 
