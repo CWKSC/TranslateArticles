@@ -101,9 +101,9 @@ false
 hello
 ```
 
-但事實證明，無法用 Haskell 編寫此代碼。Haskell 沒有 Java `instanceof` 運算符之類的東西：不可能問什麼是什麼類型，並不能根據答案決定要做什麼。原因之一是檢查後，編譯器將*擦除* Haskell 類型：在運行時，沒有類型信息可供查詢！但是，正如我們將看到的，還有其他充分的理由。
+但事實證明，無法用 Haskell 編寫此代碼。Haskell 沒有 Java `instanceof` 運算符之類的東西：不可能問什麼是什麼類型，並不能根據答案決定要做什麼。原因之一是檢查後，編譯器將*擦除* Haskell 類型：在運行時，沒有類型信息可供查詢！但是，正如我們將看到的，還有其他充分的理由
 
-這種類型的多態被稱為 *參數多態* 。我們說像這樣的函數在類型中 `f :: a -> a -> a` 是 *參數化* 的 `a`。在這裡，“參數”只是“對於呼叫者選擇的任何類型都可以統一工作”的幻想術語。在 Java 中，這種類型的多態性是由 *泛型* 提供的（您猜對了，它受 Haskell 的啟發：Haskell 的原始設計師之一 [Philip Wadler](http://homepages.inf.ed.ac.uk/wadler/) 後來成為 Java 泛型開發的主要參與者之一）。
+這種類型的多態被稱為 *參數多態* 。我們說像這樣的函數在類型中 `f :: a -> a -> a` 是 *參數化* 的 `a`。在這裡，“參數”只是“對於呼叫者選擇的任何類型都可以統一工作”的幻想術語。在 Java 中，這種類型的多態性是由 *泛型* 提供的（您猜對了，它受 Haskell 的啟發：Haskell 的原始設計師之一 [Philip Wadler](http://homepages.inf.ed.ac.uk/wadler/) 後來成為 Java 泛型開發的主要參與者之一）
 
 那麼，實際上什麼函數 *可以* 具有這種類型？其實只有兩個！
 
@@ -230,7 +230,7 @@ data Foo' = F' Int | G' Char
    > 不知道 enter the picture 如何翻譯，原文在此：
 >
    > The types that can be specified for type class methods are more general and flexible than the signatures that can be given for Java interface methods, especially when *multi-parameter type classes* enter the picture. For example, consider a hypothetical type class
-   
+
    ```haskell
    class Blerg a b where
   blerg :: a -> b -> Bool
@@ -239,7 +239,7 @@ data Foo' = F' Int | G' Char
    使用 `blerg` 執行多次調度：編譯器取決於類型 `a` 和 `b` 選擇哪種 `blerg` 實現。 Java 沒有簡單的方法可以做到這一點
 
    Haskell 類型類也可以輕鬆地處理二進制（或三進制或 …）方法，如
-   
+
    ```haskell
    class Num a where
      (+) :: a -> a -> a
@@ -247,14 +247,14 @@ data Foo' = F' Int | G' Char
    ```
 
    在 Java 中，沒有很好的方法來執行此操作：一方面，兩個參數之一必須是 “特權(privileged)” 參數，實際上是要 `(+)` 在其上調用方法，並且這種不對稱性很尷尬。此外，由於 Java 的子類型化，獲取某個接口類型的兩個參數並 *不能* 保證它們實際上是同一類型，這使得實現二進制運算符（如 `(+)`）很尷尬（通常需要進行一些運行時類型檢查）
-   
+
    > There is no nice way to do this in Java: for one thing, one of the two arguments would have to be the “privileged” one which is actually getting the `(+)` method invoked on it, and this asymmetry is awkward. Furthermore, because of Java’s subtyping, getting two arguments of a certain interface type does *not* guarantee that they are actually the same type, which makes implementing binary operators such as `(+)` awkward (usually requiring some runtime type checks).
 
 ### ▌Standard type classes 標準類型類別
 
 這是您應該了解的一些其他標準類型類：
 
-- [Ord](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t%3AOrd) 用於其元素可以 *完全排序的類型* ，即可以比較任何兩個元素以查看哪個元素小於另一個元素。它提供了類似的比較操作 `(<)` 和 `(<=)`，也是 `compare` 函數。
+- [Ord](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t%3AOrd) 用於其元素可以 *完全排序的類型* ，即可以比較任何兩個元素以查看哪個元素小於另一個元素。它提供了類似的比較操作 `(<)` 和 `(<=)`，也是 `compare` 函數
 
 - [Num](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t%3ANum) 用於“數字”類型，它支持加法，減法和乘法運算。需要注意的一件事是整數實際上是類型類多態：
 
@@ -265,11 +265,11 @@ data Foo' = F' Int | G' Char
 
   這意味著像 `5` 這樣的文字可以用作 `Int`s，`Integer`s，`Double`s 或作為 `Num` 實例的任何其他類型（`Rational`，`Complex Double` 甚至是您定義的類型 ...）
 
-- [Show](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t%3AShow) 定義了方法 `show`，該方法用於將值轉換為 `String`s。
+- [Show](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t%3AShow) 定義了方法 `show`，該方法用於將值轉換為 `String`s
 
-- [Read](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#v:Eq/Read) 是的雙重性(dual of) `Show`。    PS:（ dual of 或者是重複的意思？）
+- [Read](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#v:Eq/Read) 是的雙重性(dual of) `Show`     PS:（ dual of 或者是重複的意思？）
 
-- [Integral](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t%3AIntegral) 表示整數類型，例如 `Int` 和 `Integer`。
+- [Integral](http://haskell.org/ghc/docs/latest/html/libraries/base/Prelude.html#t%3AIntegral) 表示整數類型，例如 `Int` 和 `Integer`
 
 ### ▌A type class example 類型類示例
 
@@ -315,7 +315,7 @@ instance Listable (Tree Int) where
   toList (Node x l r) = toList l ++ [x] ++ toList r
 ```
 
-如果我們根據實現其他功能 `toList`，它們也會受到 `Listable` 約束。例如：
+如果我們根據 `toList` 實現其他函數，則它們也會得到 `Listable` 約束。例如：
 
 ```haskell
 -- to compute sumL, first convert to a list of Ints, then sum
@@ -340,7 +340,7 @@ foo x y = sum (toList x) == sum (toList y) || x < y
 foo :: (Listable a, Ord a) => a -> a -> Bool
 ```
 
-也就是說，由於 `foo` 同時使用了 `toList` 和對參數進行比較，因此對同時屬於 `Listable` 和 `Ord` 的實例的類型起作用
+也就是說，`foo` 可以處理同時是 `toList` 和 `Ord` 實例的類型，因為它同時使用了 `Listable` 和 `Ord` 
 
 作為最後一個更複雜的示例，請考慮以下實例：
 
