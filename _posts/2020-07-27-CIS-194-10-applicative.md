@@ -1,7 +1,7 @@
 ---
 date: 2020-07-27 19:00:00
 layout: post
-title: "CIS 194 10 Applicative functors, Part I 適用函子，第一部分"
+title: "CIS 194 10 Applicative functors, Part I 應用函子，第一部分"
 subtitle: 
 description: 
 image: 
@@ -17,7 +17,7 @@ math: true
 
 Source: [10-applicative](https://www.seas.upenn.edu/~cis194/spring13/lectures/10-applicative.html)
 
-## ▌Applicative functors, Part I 適用函子，第一部分
+## ▌Applicative functors, Part I 應用函子，第一部分
 
 CIS 194 第 10 週
 2012 年 3 月 25 日
