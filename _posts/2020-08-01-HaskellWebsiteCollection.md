@@ -6,7 +6,7 @@ subtitle:
 description: 
 image: 
 optimized_image: 
-category: 
+category: Haskell
 tags:
   - Haskell
 author: CWKSC
