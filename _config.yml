@@ -1,6 +1,6 @@
 # Site Settings
-name: CWKSC's 翻譯文章
-title: CWKSC's 翻譯文章
+name: CWKSC's 翻譯文章 (已棄用)
+title: CWKSC's 翻譯文章 (已棄用)
 description: CWKSC's 翻譯文章，這個博客是一些網站文檔文章的翻譯，有時候只是單純經過一次 google 翻譯，然後再慢慢修修補補
 tags:
   - blog
@@ -46,7 +46,7 @@ two_columns_layout: true
 # Advanced Settings
 baseurl: "/TranslateArticles" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site
-google_analytics: "UA-173965022-2"
+google_analytics: ""
 language: "zh"
 categories_folder: category
 sent_message_url: "/contact/message-sent/"
